@@ -19,12 +19,21 @@ const TString teleDir = "/data/d2/CIAE_Jan2017_13C/telefile/";
 class caliNT
 {
 public:
+  caliNT(int runNo, TString tName, TString dName);
+  virtual ~caliNT();
+  void FillHist();
+  void FitData();
+  void Outout();
+  
+  int run_num;
+  TString det_name;
+  
+  TFile *inputFile;
+  TTree *dtree;
   TH1F *h_data;
   TGraph *g_fit;
   TSpectrum *sp;
   TF1 *fit;
-  caliNT(int runNo);
-  virtual ~caliNT();
 };
 
 #endif
