@@ -1,8 +1,4 @@
 ###############################################################################
-
-#include $(ROOTSYS)/etc/Makefile.arch
-
-###############################################################################
 OBJ = telescope.exe
 MainFile = te_main.cc 
 LinkFile = LinkDef.hh
@@ -38,6 +34,4 @@ $(UserDict): $(IncludeFile) $(LinkFile)
 	rootcint -f $@ -c $(DIR_INC) $^
 clean:
 	rm -f *.o *.d *Dict.* $(OBJ)
-	
 ###############################################################################
-
