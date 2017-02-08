@@ -17,6 +17,7 @@ int main(int argc,char** argv)
   TString det_name(argv[3]);
  
   caliNT cali(runNum,teleName,det_name);
+  cali.FitData();
   cout<<"   ======= Ending... ======="<<endl;
   printf("CPU_Time: %f s, RealTime: %f s\n",watch.CpuTime(),watch.RealTime());
 }

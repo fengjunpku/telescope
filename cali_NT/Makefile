@@ -16,7 +16,7 @@ ROOTGLIBS = $(shell root-config --glibs)
 
 GXX = g++ -std=c++0x
 DIR_INC = -I$(ROOTSYS)/include -I$(shell pwd)/include -I$(TARTSYS)/include
-CFLAGS = -Wall -O $(DIR_INC) -L$(TARTSYS)/lib -lTMVA
+CFLAGS = -Wall -O $(DIR_INC) -L$(TARTSYS)/lib -lTMVA -lSpectrum
 #-lXMLParser -lanacore -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 ###############################################################################
 

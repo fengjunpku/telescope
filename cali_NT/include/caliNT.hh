@@ -13,7 +13,10 @@
 #include "JunErrors.hh"
 #include "teDetector.hh"
 
+#include <iomanip>
+
 const float energy[] = {3182,5156,5486};
+const int nEpeaks = int(sizeof(energy)/sizeof(float));
 const TString teleDir = "/data/d2/CIAE_Jan2017_13C/telefile/";
 
 class caliNT
@@ -21,9 +24,9 @@ class caliNT
 public:
   caliNT(int runNo, TString tName, TString dName);
   virtual ~caliNT();
-  void FillHist();
   void FitData();
-  void Outout();
+  void Output();
+  void SortArrray(int n, Double_t *array);
   
   int run_num;
   TString det_name;
@@ -33,7 +36,8 @@ public:
   TH1F *h_data;
   TGraph *g_fit;
   TSpectrum *sp;
-  TF1 *fit;
+  TF1 *fitPeak;
+  TF1 *line;
 };
 
 #endif
