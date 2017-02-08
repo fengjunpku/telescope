@@ -11,14 +11,16 @@ public:
   teDetector();
   virtual ~teDetector();
   void Reset();
-  float xv[32],yv[32];//original value of adc
-  int xs[teMaxHit],ys[teMaxHit];//strip after remap
-  float xnv[teMaxHit],ynv[teMaxHit];//value after normalization
+  float xv[32],yv[32];//value of adc after normalization
+  short xs[teMaxHit],ys[teMaxHit];//strip after remap
+  float nv[teMaxHit];//front value after normalization
   float e[teMaxHit];//energy after cali
-  int hit;
+  short hit;
 
   ClassDef(teDetector,1);
 };
+
+//==============================================================================
 
 class teTele  // basic class of telescope
 {
@@ -29,10 +31,10 @@ public:
 
   float sv;//original value of ssd
   float se;//energy of ssd after cali
-  int hit;
+  short hit;
   int tv[32];//original value of gdc
   float t[teMaxHit];//value of gdc
-  int tm[teMaxHit];//multi of gdc
+  short tm[teMaxHit];//multi of gdc
 
   ClassDef(teTele,1);
 };
@@ -48,10 +50,10 @@ public:
   //after pos. correlation
   float w1e[teMaxHit];
   float b7e[teMaxHit];
-  int w1x[teMaxHit];
-  int w1y[teMaxHit];
-  int b7x[teMaxHit];
-  int b7y[teMaxHit];
+  short w1x[teMaxHit];
+  short w1y[teMaxHit];
+  short b7x[teMaxHit];
+  short b7y[teMaxHit];
 
   ClassDef(teT0,1);
 };

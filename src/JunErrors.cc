@@ -7,3 +7,10 @@ void MiaoError(string errorStr)
   cout<<errorStr<<endl;
   exit(0);
 }
+
+void MiaoWarn(string warnStr)
+{
+  cout<<YELLOW<<BOLD<<"# Miao! "<<COLOR_END;
+  cout<<BLUE<<BOLD<<"Warn: "<<COLOR_END;
+  cout<<warnStr<<endl;
+}

@@ -16,6 +16,9 @@ namespace teleDef
   static const int teMDCNum = 11;//num of madc
   static const int teGDCNum = 2;//num of madc
 
+  static const float teCoinWindow = 20;//default CoinWindow of front & back of DSSD
+  static const float teLowTh = 100;//bin
+
   //========cali pars============
   //w1***************************************************
   static const float tel0wi = 0;//inter----l0

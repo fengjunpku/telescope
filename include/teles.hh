@@ -20,8 +20,14 @@ public:
 private:
   void Init();
   void Branch();
-  void ReadPars(float par[][2],const char* filename);
+  void ReadPars(float par[][2],const char* filename, int parNum = 16);
+  void SortDSSD(teDetector &dec,int nums = 16,float window = 20);
   void LoadL0();
+  void LoadR0();
+  void LoadL1();
+  void LoadR1();
+  void LoadL2();
+  void LoadR2();
   void Reset();
   TFile *inputFile,*optFile;
   TTree *dtree,*otree;

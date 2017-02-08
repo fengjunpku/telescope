@@ -20,4 +20,5 @@
 using namespace std;
 
 void MiaoError(string errorStr="");
+void MiaoWarn(string warnStr="");
 #endif
