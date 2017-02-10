@@ -45,6 +45,7 @@ void caliNT::FitData()
   fitPeak = new TF1("fitPeak","gaus(0)+gaus(3)",200,700);// for sub peak
   Double_t *pars = new Double_t[nfound*6];
   Double_t *xfound = new Double_t[nfound];
+	Double_t *res = new Double_t[nfound]; 
   cout<<"--- peak_Spec  peak_Spec+Fit ---"<<endl;
   for(int i=0;i<nfound;i++)
   {
@@ -66,10 +67,18 @@ void caliNT::FitData()
       h_data->Fit(fitPeak,"Q+","",xp-30,xp+30);
       fitPeak->GetParameters(pars+6*i);
       
-      if(pars[6*i]>pars[6*i+3]) xfound[i] = pars[6*i+1];
-      else xfound[i] = pars[6*i+4];
+      if(pars[6*i]>pars[6*i+3]) 
+			{
+				xfound[i] = pars[6*i+1];
+				res[i]    = 2.355*pars[6*i+2]/xfound[i];
+			}
+      else 
+			{
+				xfound[i] = pars[6*i+4];
+				res[i]    = 2.355*pars[6*i+5]/xfound[i];
+			}
     }
-    cout<<" "<<vpeaks[i]<<"          "<<xfound[i]<<endl;
+    cout<<" "<<vpeaks[i]<<"          "<<xfound[i]<<"     res: "<<res[i]<<endl;
   }
   SortArrray(nfound,xfound);
   g_fit = new TGraph();
@@ -96,7 +105,7 @@ void caliNT::FitData()
 void caliNT::Output()
 {
   char outname[20];
-  sprintf(outname,"cali%04d_%s.root",run_num,det_name.Data());
+  sprintf(outname,"%s_cali%04d.root",det_name.Data(),run_num);
   TFile *f = new TFile(outname,"RECREATE");
   g_fit->Write();
   h_data->Write();
