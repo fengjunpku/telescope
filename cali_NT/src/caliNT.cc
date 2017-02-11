@@ -24,28 +24,30 @@ caliNT::caliNT(int runNo, TString tName, TString dName, TString mode)
   }
   inputFile->GetObject("tree",dtree);
   //init the hist
+  char htitle[20];
+  sprintf(htitle,"run%04d_%s%s",run_num,tName.Data(),dName.Data());
   if(tName.EqualTo("l0")||tName.EqualTo("r0"))
   {
     if(dName.EqualTo("w1"))
-      h_data = new TH1F("h_data","h_data",500,200,700);
+      h_data = new TH1F("h_data",htitle,500,200,700);
     if(dName.EqualTo("bb7"))
-      h_data = new TH1F("h_data","h_data",500,300,800);
+      h_data = new TH1F("h_data",htitle,500,300,800);
     if(dName.EqualTo("ssd"))
-      h_data = new TH1F("h_data","h_data",350,250,600);
+      h_data = new TH1F("h_data",htitle,350,250,600);
   }
   if(tName.EqualTo("l1")||tName.EqualTo("r1"))
   {
     if(dName.EqualTo("w1"))
-      h_data = new TH1F("h_data","h_data",2500,1500,4000);
+      h_data = new TH1F("h_data",htitle,2500,1500,4000);
     if(dName.EqualTo("ssd"))
-      h_data = new TH1F("h_data","h_data",300,300,600);
+      h_data = new TH1F("h_data",htitle,300,300,600);
   }
   if(tName.EqualTo("l2")||tName.EqualTo("r2"))
   {
     if(dName.EqualTo("bb7"))
       MiaoError("Have not be normalized !!!");
     if(dName.EqualTo("ssd"))
-      h_data = new TH1F("h_data","h_data",900,700,1600);
+      h_data = new TH1F("h_data",htitle,900,700,1600);
   }
   //extract the hist from the tree
   char expr[20];
@@ -71,7 +73,7 @@ void caliNT::FitData()
   fitPeak = new TF1("fitPeak","gaus(0)+gaus(3)",200,700);// for sub peak
   Double_t *pars = new Double_t[nfound*6];
   Double_t *xfound = new Double_t[nfound];
-	Double_t *res = new Double_t[nfound]; 
+  Double_t *res = new Double_t[nfound]; 
   cout<<"--- peak_Spec  peak_Spec+Fit ---"<<endl;
   for(int i=0;i<nfound;i++)
   {
@@ -94,15 +96,15 @@ void caliNT::FitData()
       fitPeak->GetParameters(pars+6*i);
       
       if(pars[6*i]>pars[6*i+3]) 
-			{
-				xfound[i] = pars[6*i+1];
-				res[i]    = 2.355*pars[6*i+2]/xfound[i];
-			}
+      {
+        xfound[i] = pars[6*i+1];
+        res[i]    = 2.355*pars[6*i+2]/xfound[i];
+      }
       else 
-			{
-				xfound[i] = pars[6*i+4];
-				res[i]    = 2.355*pars[6*i+5]/xfound[i];
-			}
+      {
+        xfound[i] = pars[6*i+4];
+        res[i]    = 2.355*pars[6*i+5]/xfound[i];
+      }
     }
     cout<<" "<<vpeaks[i]<<"          "<<xfound[i]<<"     res: "<<res[i]*100<<" % "<<endl;
   }
@@ -121,7 +123,7 @@ void caliNT::FitData()
   chi2 = g_fit->GetFunction("pol1")->GetChisquare();
   
   char title[20];
-  sprintf(title,"P0_%f_P1_%f",p[0],p[1]);
+  sprintf(title,"run%04d_%s_P0_%f_P1_%f",run_num,det_name.Data(),p[0],p[1]);
   g_fit->SetTitle(title);
 
   Output();
