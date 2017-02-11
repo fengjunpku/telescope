@@ -2,6 +2,8 @@
 #define TELES_HH 1
 
 #include <fstream>
+#include <map>
+#include <string>
 
 #include <TString.h>
 #include <TFile.h>
@@ -13,15 +15,16 @@
 class teles
 {
 public:
-  teles(TString rootpath,int runNo);
+  teles(TString rootpath, int runNo);
   virtual ~teles();
   void LoadData();
   void Save();
 private:
   void Init();
   void Branch();
-  void ReadPars(float par[][2],const char* filename, int parNum = 16);
-  void SortDSSD(teDetector &dec,int nums = 16,float window = 20);
+  void ReadPars(float par[][2], const char* filename, int parNum = 16);
+  void SortDSSD(teDetector &dec, string det_name, int nums = 16, float window = 20);
+  void LoadCaliNT(string det_name,const char* filename);
   void LoadL0();
   void LoadR0();
   void LoadL1();
@@ -53,6 +56,9 @@ private:
   float npl2df[32][2],npl2db[32][2];//l2 bb7
 
   float npr2df[32][2],npr2db[32][2];//r2 bb7
+  //caliNT pars
+  map<string,float> slope;
+  map<string,float> inter;
 };
 
 #endif

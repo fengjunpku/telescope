@@ -55,7 +55,7 @@ void teles::Init()
   dtree->SetBranchAddress("madc",mdc);
   dtree->SetBranchAddress("gdc",gdc);
   dtree->SetBranchAddress("gmulti",gml);
-
+  //-----------------------------------
   ReadPars(npl0wf,"./nPars/lee/l0wf.txt");
   ReadPars(npl0wb,"./nPars/lee/l0wb.txt");
   ReadPars(npl0df,"./nPars/lee/l0df.txt",32);
@@ -77,6 +77,21 @@ void teles::Init()
 
   ReadPars(npr2df,"./nPars/lee/r2df.txt",32);
   ReadPars(npr2db,"./nPars/lee/r2db.txt",32);
+  //----------------------------------
+  LoadCaliNT("l0w1","nPars/cali_nt/ntCali0310_l0w1.txt");
+  LoadCaliNT("r0w1","nPars/cali_nt/ntCali0311_r0w1.txt");
+  LoadCaliNT("l0bb7","nPars/cali_nt/ntCali0310_l0bb7.txt");
+  LoadCaliNT("r0bb7","nPars/cali_nt/ntCali0310_r0bb7.txt");
+  LoadCaliNT("l0ssd","nPars/cali_nt/ntCali0310_l0ssd.txt");
+  LoadCaliNT("r0ssd","nPars/cali_nt/ntCali0310_r0ssd.txt");
+  LoadCaliNT("l1w1","nPars/cali_nt/ntCali0310_l1w1.txt");
+  LoadCaliNT("r1w1","nPars/cali_nt/ntCali0310_r1w1.txt");
+  LoadCaliNT("l1ssd","nPars/cali_nt/ntCali0310_l1ssd.txt");
+  LoadCaliNT("r1ssd","nPars/cali_nt/ntCali0310_r1ssd.txt");
+  LoadCaliNT("l2ssd","nPars/cali_nt/ntCali0310_l2ssd.txt");
+  LoadCaliNT("r2ssd","nPars/cali_nt/ntCali0310_r2ssd.txt");
+  LoadCaliNT("l2bb7","nPars/cali_nt/ntCali0310_l2bb7.txt");
+  LoadCaliNT("r2bb7","nPars/cali_nt/ntCali0310_r2bb7.txt");
 }
 
 void teles::Branch()
@@ -118,8 +133,25 @@ void teles::ReadPars(float par[][2],const char* filename,int parNum)
     sprintf(warnStr," %s does not contain enough pars !",filename);
     MiaoWarn(warnStr);
   }
+  parfile.close();
 }
-  
+
+void teles::LoadCaliNT(string det_name,const char* filename)
+{
+  ifstream califile(filename);
+  if(!califile || !califile.is_open() || !califile.good())
+  {
+    char warnStr[36];
+    sprintf(warnStr,"Can not open cali_NT file %s, use defealt pars !",filename);
+    MiaoWarn(warnStr);
+    slope[det_name] = 0;
+    inter[det_name] = 1;
+    return;
+  }
+  califile>>inter[det_name]>>slope[det_name];
+  //cout<<inter[det_name]<<"  "<<slope[det_name]<<endl;
+  califile.close();
+}
 
 void teles::LoadData()
 {
@@ -131,7 +163,7 @@ void teles::LoadData()
   {
     if(!(ientry%onePC))
     {
-      printf("\r Progress Events : %11ld : %6.1f %%",ientry,(float)ientry/(float)onePC);
+      printf("\r Progress Events %04d : %11ld : %6.1f %%",runNum,ientry,(float)ientry/(float)onePC);
       //cout<<ientry<<"    "<<(double)ientry/(double)nentries*100.<<" %"<<endl;
       fflush(stdout);
     }
@@ -181,10 +213,10 @@ void teles::LoadL0()
   if(adc[4][17]>0&&adc[4][17]<4000)
   {
     l0->sv = adc[4][17];
-    l0->se = tel0si + tel0ss * l0->sv;
+    l0->se = inter["l0ssd"] + slope["l0ssd"] * l0->sv;
   }
-  SortDSSD(l0->w1);
-  SortDSSD(l0->bb7,32);
+  SortDSSD(l0->w1,"l0w1");
+  SortDSSD(l0->bb7,"l0bb7",32);
 }
 
 void teles::LoadR0()
@@ -220,10 +252,10 @@ void teles::LoadR0()
   if(adc[4][18]>0&&adc[4][18]<4000)
   {
     r0->sv = adc[4][18];
-    r0->se = ter0si + ter0ss * r0->sv;
+    r0->se = inter["r0ssd"] + slope["r0ssd"] * r0->sv;
   }
-  SortDSSD(r0->w1);
-  SortDSSD(r0->bb7,32);
+  SortDSSD(r0->w1,"r0w1");
+  SortDSSD(r0->bb7,"r0bb7",32);
 }
 
 void teles::LoadL1()
@@ -248,9 +280,9 @@ void teles::LoadL1()
   if(adc[4][16]>0&&adc[4][16]<4000)
   {
     l1->sv = adc[4][16];
-    l1->se = tel1si + tel1ss * l1->sv;
+    l1->se = inter["l1ssd"] + slope["l1ssd"] * l1->sv;
   }
-  SortDSSD(l1->w1);
+  SortDSSD(l1->w1,"l1w1");
 }
 
 void teles::LoadR1()
@@ -275,9 +307,9 @@ void teles::LoadR1()
   if(adc[4][19]>0&&adc[4][19]<4000)
   {
     r1->sv = adc[4][19];
-    r1->se = ter1si + ter1ss * r1->sv;
+    r1->se = inter["r1ssd"] + slope["r1ssd"] * r1->sv;
   }
-  SortDSSD(r1->w1);
+  SortDSSD(r1->w1,"r1w1");
 }
 
 void teles::LoadL2()
@@ -303,9 +335,9 @@ void teles::LoadL2()
   if(adc[4][21]>0&&adc[4][21]<4000)
   {
     l2->sv = adc[4][21];
-    l2->se = tel2si + tel2ss * l2->sv;
+    l2->se = inter["l2ssd"] + slope["l2ssd"] * l2->sv;
   }
-  SortDSSD(l2->bb7,32);
+  SortDSSD(l2->bb7,"l2bb7",32);
 }
 
 void teles::LoadR2()
@@ -331,9 +363,9 @@ void teles::LoadR2()
   if(adc[4][20]>0&&adc[4][20]<4000)
   {
     r2->sv = adc[4][20];
-    r2->se = ter2si + ter2ss * r2->sv;
+    r2->se = inter["r2ssd"] + slope["r2ssd"] * r2->sv;
   }
-  SortDSSD(r2->bb7,32);
+  SortDSSD(r2->bb7,"r2bb7",32);
 }
 
 void teles::Reset()
@@ -353,7 +385,7 @@ void teles::Save()
   optFile->Close();
 }
 
-void teles::SortDSSD(teDetector &dec,int nums,float window)
+void teles::SortDSSD(teDetector &dec, string det_name, int nums, float window)
 {
   if(nums!=16 && nums!=32)
     MiaoError("Invalid value of index in teles::SortDSSD()");
@@ -411,5 +443,9 @@ void teles::SortDSSD(teDetector &dec,int nums,float window)
     dec.ys[dec.hit] = tmpys[tmpj];
     dec.hit++;
     yflag[tmpj] = 1;
+  }
+  for(int i=0;i<xhit;i++)
+  {
+    dec.e[i] = inter[det_name] + slope[det_name] * dec.nv[i];
   }
 }

@@ -31,6 +31,6 @@ int main(int argc,char** argv)
   teles te(tePath.Data(),runNum);
   te.LoadData();
   te.Save();
-  cout<<"   ======= Ending... ======="<<endl;
+  cout<<"   ======= Ending... "<<runNum<<" ======="<<endl;
   printf("CPU_Time: %f s, RealTime: %f s\n",watch.CpuTime(),watch.RealTime());
 }
