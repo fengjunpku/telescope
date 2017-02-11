@@ -2,6 +2,15 @@
 
 caliNT::caliNT(int runNo, TString tName, TString dName, TString mode)
 {
+  //check input
+  if(!tName.EqualTo("l0")&&!tName.EqualTo("l1")&&!tName.EqualTo("l2")
+    &&!tName.EqualTo("r0")&&!tName.EqualTo("r1")&&!tName.EqualTo("r2"))
+    MiaoError("Tele name should be l0/l1/l2/r0/r1/r2!");
+  if(!dName.EqualTo("w1")&&!dName.EqualTo("bb7")&&!dName.EqualTo("ssd"))
+    MiaoError("Detector name should be w1/bb7/ssd!");
+  if(!mode.EqualTo("default")&&!mode.EqualTo("spec"))
+    MiaoError("mode name should be default/spec!");
+  //open tele root file
   char filename[20];
   run_num = runNo;
   sprintf(filename,"seda%04d.root",run_num);
@@ -13,23 +22,40 @@ caliNT::caliNT(int runNo, TString tName, TString dName, TString mode)
     sprintf(errStr,"Can not open input file %s, Exit !",telefile.Data());
     MiaoError(errStr);
   }
-  
   inputFile->GetObject("tree",dtree);
-  h_data = new TH1F("h_data","h_data",500,200,700);
-  
-  if(!tName.EqualTo("l0")&&!tName.EqualTo("l1")&&!tName.EqualTo("l2")
-    &&!tName.EqualTo("r0")&&!tName.EqualTo("r1")&&!tName.EqualTo("r2"))
-    MiaoError("Tele name should be l0/l1/l2/r0/r1/r2!");
-  if(!dName.EqualTo("w1")&&!dName.EqualTo("bb7")&&!dName.EqualTo("ssd"))
-    MiaoError("Detector name should be w1/bb7/ssd!");
-  if(!mode.EqualTo("default")&&!mode.EqualTo("spec"))
-    MiaoError("mode name should be default/spec!");
-  
-  det_name = tName+dName;
+  //init the hist
+  if(tName.EqualTo("l0")||tName.EqualTo("r0"))
+  {
+    if(dName.EqualTo("w1"))
+      h_data = new TH1F("h_data","h_data",500,200,700);
+    if(dName.EqualTo("bb7"))
+      h_data = new TH1F("h_data","h_data",500,300,800);
+    if(dName.EqualTo("ssd"))
+      h_data = new TH1F("h_data","h_data",350,250,600);
+  }
+  if(tName.EqualTo("l1")||tName.EqualTo("r1"))
+  {
+    if(dName.EqualTo("w1"))
+      h_data = new TH1F("h_data","h_data",2500,1500,4000);
+    if(dName.EqualTo("ssd"))
+      h_data = new TH1F("h_data","h_data",300,300,600);
+  }
+  if(tName.EqualTo("l2")||tName.EqualTo("r2"))
+  {
+    if(dName.EqualTo("bb7"))
+      MiaoError("Have not be normalized !!!");
+    if(dName.EqualTo("ssd"))
+      h_data = new TH1F("h_data","h_data",900,700,1600);
+  }
+  //extract the hist from the tree
   char expr[20];
-  sprintf(expr,"%s.%s.nv>>h_data",tName.Data(),dName.Data());
+  if(dName.EqualTo("ssd"))
+    sprintf(expr,"%s.sv>>h_data",tName.Data());
+  else
+    sprintf(expr,"%s.%s.nv>>h_data",tName.Data(),dName.Data());
   dtree->Draw(expr);
-  
+  //
+  det_name = tName+dName;
   _mode = mode;
 }
 
@@ -78,7 +104,7 @@ void caliNT::FitData()
 				res[i]    = 2.355*pars[6*i+5]/xfound[i];
 			}
     }
-    cout<<" "<<vpeaks[i]<<"          "<<xfound[i]<<"     res: "<<res[i]<<endl;
+    cout<<" "<<vpeaks[i]<<"          "<<xfound[i]<<"     res: "<<res[i]*100<<" % "<<endl;
   }
   SortArrray(nfound,xfound);
   g_fit = new TGraph();
@@ -105,7 +131,7 @@ void caliNT::FitData()
 void caliNT::Output()
 {
   char outname[20];
-  sprintf(outname,"%s_cali%04d.root",det_name.Data(),run_num);
+  sprintf(outname,"ntCaliPars/%s_cali%04d.root",det_name.Data(),run_num);
   TFile *f = new TFile(outname,"RECREATE");
   g_fit->Write();
   h_data->Write();
