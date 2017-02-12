@@ -67,7 +67,7 @@ caliNT::~caliNT()
 void caliNT::FitData()
 {
   sp = new TSpectrum(nEpeaks+1);
-  int nfound = sp->Search(h_data);
+  int nfound = sp->Search(h_data,3);//3 mean sigma, default is 2
   float *vpeaks = sp->GetPositionX();
   
   fitPeak = new TF1("fitPeak","gaus(0)+gaus(3)",200,700);// for sub peak
