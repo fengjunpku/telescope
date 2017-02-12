@@ -92,7 +92,7 @@ void caliNT::FitData()
       fitPeak->SetParameters(sub_yp,sub_xp,sub_sigma,yp,xp,sigma);
       fitPeak->SetParLimits(1,xp-20,xp+20);
       fitPeak->SetParLimits(4,xp-20,xp+20);
-      h_data->Fit(fitPeak,"Q+","",xp*0.97,xp*1.03);
+      h_data->Fit(fitPeak,"Q+","",xp*0.965,xp*1.025);//fit range is very important
       fitPeak->GetParameters(pars+6*i);
       
       if(pars[6*i]>pars[6*i+3]) 
