@@ -56,44 +56,44 @@ void teles::Init()
   dtree->SetBranchAddress("gdc",gdc);
   dtree->SetBranchAddress("gmulti",gml);
   //-----------------------------------
-  ReadPars(npl0wf,"./nPars/lee/l0wf.txt");
-  ReadPars(npl0wb,"./nPars/lee/l0wb.txt");
-  ReadPars(npl0df,"./nPars/lee/l0df.txt",32);
-  ReadPars(npl0db,"./nPars/lee/l0db.txt",32);
+  ReadPars(npl0wf,"./nPars/self/sn_l0w1f_0421.txt");
+  ReadPars(npl0wb,"./nPars/self/sn_l0w1b_0421.txt");
+  ReadPars(npl0df,"./nPars/self/sn_l0bb7f_0421.txt",32);
+  ReadPars(npl0db,"./nPars/self/sn_l0bb7b_0421.txt",32);
 
-  ReadPars(npr0wf,"./nPars/lee/r0wf.txt");
-  ReadPars(npr0wb,"./nPars/lee/r0wb.txt");
-  ReadPars(npr0df,"./nPars/lee/r0df.txt",32);
-  ReadPars(npr0db,"./nPars/lee/r0db.txt",32);
+  ReadPars(npr0wf,"./nPars/self/sn_r0w1f_0421.txt");
+  ReadPars(npr0wb,"./nPars/self/sn_r0w1b_0421.txt");
+  ReadPars(npr0df,"./nPars/self/sn_r0bb7f_0421.txt",32);
+  ReadPars(npr0db,"./nPars/self/sn_r0bb7b_0421.txt",32);
 
-  ReadPars(npl1wf,"./nPars/lee/l1wf.txt");
-  ReadPars(npl1wb,"./nPars/lee/l1wb.txt");
+  ReadPars(npl1wf,"./nPars/self/sn_l1w1f_0421.txt");
+  ReadPars(npl1wb,"./nPars/self/sn_l1w1b_0421.txt");
 
-  ReadPars(npr1wf,"./nPars/lee/r1wf.txt");
-  ReadPars(npr1wb,"./nPars/lee/r1wb.txt");
+  ReadPars(npr1wf,"./nPars/self/sn_r1w1f_0421.txt");
+  ReadPars(npr1wb,"./nPars/self/sn_r1w1b_0421.txt");
 
-  ReadPars(npl2df,"./nPars/lee/l2df.txt",32);
-  ReadPars(npl2db,"./nPars/lee/l2db.txt",32);
+  ReadPars(npl2df,"./nPars/self/sn_l2bb7f_0421.txt",32);
+  ReadPars(npl2db,"./nPars/self/sn_l2bb7b_0421.txt",32);
 
-  ReadPars(npr2df,"./nPars/lee/r2df.txt",32);
-  ReadPars(npr2db,"./nPars/lee/r2db.txt",32);
+  ReadPars(npr2df,"./nPars/self/sn_r2bb7f_0421.txt",32);
+  ReadPars(npr2db,"./nPars/self/sn_r2bb7b_0421.txt",32);
   //----------------------------------
-  LoadCaliNT("l0w1","nPars/cali_nt/ntCali0310_l0w1.txt");
-  LoadCaliNT("r0w1","nPars/cali_nt/ntCali0311_r0w1.txt");
-  LoadCaliNT("l0bb7","nPars/cali_nt/ntCali0318_l0bb7.txt");
-  LoadCaliNT("r0bb7","nPars/cali_nt/ntCali0317_r0bb7.txt");
+  LoadCaliNT("l0w1","nPars/cali_snt/ntCali0310_l0w1.txt");
+  LoadCaliNT("r0w1","nPars/cali_snt/ntCali0311_r0w1.txt");
+  LoadCaliNT("l0bb7","nPars/cali_snt/ntCali0318_l0bb7.txt");
+  LoadCaliNT("r0bb7","nPars/cali_snt/ntCali0317_r0bb7.txt");
   LoadCaliNT("l0ssd","nPars/cali_nt/ntCali0323_l0ssd.txt");
   LoadCaliNT("r0ssd","nPars/cali_nt/ntCali0322_r0ssd.txt");
   
-  LoadCaliNT("l1w1","nPars/cali_nt/ntCali0307_l1w1.txt");
-  LoadCaliNT("r1w1","nPars/cali_nt/ntCali0305_r1w1.txt");
+  LoadCaliNT("l1w1","nPars/cali_snt/ntCali0307_l1w1.txt");
+  LoadCaliNT("r1w1","nPars/cali_snt/ntCali0305_r1w1.txt");
   LoadCaliNT("l1ssd","nPars/cali_nt/ntCali0320_l1ssd.txt");
   LoadCaliNT("r1ssd","nPars/cali_nt/ntCali0319_r1ssd.txt");
   
   LoadCaliNT("l2ssd","nPars/cali_nt/ntCali0314_l2ssd.txt");
   LoadCaliNT("r2ssd","nPars/cali_nt/ntCali0316_r2ssd.txt");
-  LoadCaliNT("l2bb7","nPars/cali_nt/ntCali0312_l2bb7.txt");
-  LoadCaliNT("r2bb7","nPars/cali_nt/ntCali0313_r2bb7.txt");
+  LoadCaliNT("l2bb7","nPars/cali_snt/ntCali0312_l2bb7.txt");
+  LoadCaliNT("r2bb7","nPars/cali_snt/ntCali0313_r2bb7.txt");
 }
 
 void teles::Branch()
@@ -319,7 +319,7 @@ void teles::LoadL2()
   //l2bb7
   for(int i=0;i<32;i++)
   {
-    float tvx = npl2db[i][0] + npl2db[i][1] * adc[1][i];
+    float tvx = npl2db[i][0] + npl2db[i][1] * 2 *adc[1][i];
     float tvy = npl2df[i][0] + npl2df[i][1] * mdc[6][i];
     if(tvx>0&&tvx<4000)
     {

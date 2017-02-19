@@ -38,14 +38,16 @@ caliNT::caliNT(int runNo, TString tName, TString dName, TString mode)
   if(tName.EqualTo("l1")||tName.EqualTo("r1"))
   {
     if(dName.EqualTo("w1"))
-      h_data = new TH1F("h_data",htitle,2500,1500,4000);
+      h_data = new TH1F("h_data",htitle,1100,1800,4000);
     if(dName.EqualTo("ssd"))
       h_data = new TH1F("h_data",htitle,300,300,600);
   }
   if(tName.EqualTo("l2")||tName.EqualTo("r2"))
   {
-    if(dName.EqualTo("bb7"))
-      MiaoError("Have not be normalized !!!");
+    if(dName.EqualTo("bb7") && tName.EqualTo("r2"))
+      h_data = new TH1F("h_data",htitle,1000,800,1800);
+    if(dName.EqualTo("bb7") && tName.EqualTo("l2"))
+      h_data = new TH1F("h_data",htitle,2000,1600,3600);
     if(dName.EqualTo("ssd"))
       h_data = new TH1F("h_data",htitle,900,700,1600);
   }
@@ -67,10 +69,10 @@ caliNT::~caliNT()
 void caliNT::FitData()
 {
   sp = new TSpectrum(nEpeaks);
-  int nfound = sp->Search(h_data,3);//3 mean sigma, default is 2
+  int nfound = sp->Search(h_data,5);//3 mean sigma, default is 2
   float *vpeaks = sp->GetPositionX();
   
-  fitPeak = new TF1("fitPeak","gaus(0)+gaus(3)",200,700);// for sub peak
+  fitPeak = new TF1("fitPeak","gaus(0)+gaus(3)",200,4000);// for sub peak
   Double_t *pars = new Double_t[nfound*6];
   Double_t *xfound = new Double_t[nfound];
   Double_t *res = new Double_t[nfound]; 
@@ -85,7 +87,7 @@ void caliNT::FitData()
       int xbin = h_data->GetXaxis()->FindBin(xp);
       float yp = h_data->GetBinContent(xbin);
       float sigma = 5;
-      float sub_xp = xp-5;
+      float sub_xp = xp-10;
       float sub_yp = 0.2*yp;
       float sub_sigma = 5;
       
