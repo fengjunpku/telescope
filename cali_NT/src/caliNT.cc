@@ -153,6 +153,14 @@ void caliNT::Record()
   of<<setw(15)<<e[0];
   of<<setw(15)<<e[1];
   of<<setw(15)<<chi2<<endl;
+  for(int i=0;i<3;i++)
+  {
+    double x,y;
+    g_fit->GetPoint(i,x,y);
+    of<<setw(15)<<x;
+  }
+	of<<endl;
+  of.close();
 }
 
 void caliNT::SortArrray(int n, Double_t *array)

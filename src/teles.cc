@@ -77,9 +77,12 @@ void teles::Init()
 
   ReadPars(npr2df,"./nPars/self/sn_r2bb7f_0421.txt",32);
   ReadPars(npr2db,"./nPars/self/sn_r2bb7b_0421.txt",32);
+  //ReadPars(npr2db,"../selfNorm/sn_r2bb7b_0765.txt",32);
   //----------------------------------
-  LoadCaliNT("l0w1","nPars/cali_snt/ntCali0310_l0w1.txt");
-  LoadCaliNT("r0w1","nPars/cali_snt/ntCali0311_r0w1.txt");
+  //LoadCaliNT("l0w1","nPars/cali_snt/ntCali0310_l0w1.txt");
+  //LoadCaliNT("r0w1","nPars/cali_snt/ntCali0311_r0w1.txt");
+  LoadCaliNT("l0w1","../../pyAna_13C/cali_Au/result/au_0335_l0w1.txt");
+  LoadCaliNT("r0w1","../../pyAna_13C/cali_Au/result/au_0335_r0w1.txt");
   LoadCaliNT("l0bb7","nPars/cali_snt/ntCali0318_l0bb7.txt");
   LoadCaliNT("r0bb7","nPars/cali_snt/ntCali0317_r0bb7.txt");
   LoadCaliNT("l0ssd","nPars/cali_nt/ntCali0323_l0ssd.txt");
