@@ -83,15 +83,22 @@ void teles::Init()
   //LoadCaliNT("r0w1","nPars/cali_snt/ntCali0311_r0w1.txt");
   LoadCaliNT("l0w1","../../pyAna_13C/cali_Au/result/au_0335_l0w1.txt");
   LoadCaliNT("r0w1","../../pyAna_13C/cali_Au/result/au_0335_r0w1.txt");
-  LoadCaliNT("l0bb7","nPars/cali_snt/ntCali0318_l0bb7.txt");
-  LoadCaliNT("r0bb7","nPars/cali_snt/ntCali0317_r0bb7.txt");
-  LoadCaliNT("l0ssd","nPars/cali_nt/ntCali0323_l0ssd.txt");
-  LoadCaliNT("r0ssd","nPars/cali_nt/ntCali0322_r0ssd.txt");
+  //LoadCaliNT("l0bb7","nPars/cali_snt/ntCali0318_l0bb7.txt");
+  //LoadCaliNT("r0bb7","nPars/cali_snt/ntCali0317_r0bb7.txt");
+  LoadCaliNT("l0bb7","../../pyAna_13C/cali_Au/result/au_0329_l0bb7.txt");
+  LoadCaliNT("r0bb7","../../pyAna_13C/cali_Au/result/au_0329_r0bb7.txt");
+  
+  //LoadCaliNT("l0ssd","nPars/cali_nt/ntCali0323_l0ssd.txt");
+  //LoadCaliNT("r0ssd","nPars/cali_nt/ntCali0322_r0ssd.txt");
+  LoadCaliNT("l0ssd","../../pyAna_13C/cali_Au/result/au_0999_l0ssd.txt");
+  LoadCaliNT("r0ssd","../../pyAna_13C/cali_Au/result/au_0999_r0ssd.txt");
   
   LoadCaliNT("l1w1","nPars/cali_snt/ntCali0307_l1w1.txt");
   LoadCaliNT("r1w1","nPars/cali_snt/ntCali0305_r1w1.txt");
-  LoadCaliNT("l1ssd","nPars/cali_nt/ntCali0320_l1ssd.txt");
-  LoadCaliNT("r1ssd","nPars/cali_nt/ntCali0319_r1ssd.txt");
+  //LoadCaliNT("l1ssd","nPars/cali_nt/ntCali0320_l1ssd.txt");
+  //LoadCaliNT("r1ssd","nPars/cali_nt/ntCali0319_r1ssd.txt");
+  LoadCaliNT("l1ssd","../../pyAna_13C/cali_Au/result/au_0999_l1ssd.txt");
+  LoadCaliNT("r1ssd","../../pyAna_13C/cali_Au/result/au_0999_r1ssd.txt");
   
   LoadCaliNT("l2ssd","nPars/cali_nt/ntCali0314_l2ssd.txt");
   LoadCaliNT("r2ssd","nPars/cali_nt/ntCali0316_r2ssd.txt");
