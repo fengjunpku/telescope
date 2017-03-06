@@ -331,7 +331,7 @@ void teles::LoadL2()
   {
     float tvx = npl2db[i][0] + npl2db[i][1] * 2 *adc[1][i];
     float tvy = npl2df[i][0] + npl2df[i][1] * mdc[6][i];
-    if(tvx>0&&tvx<4000)
+    if(tvx>0&&tvx<8000)
     {
       if(i<16) l2->bb7.xv[15-i] = tvx;
       else     l2->bb7.xv[47-i] = tvx;
