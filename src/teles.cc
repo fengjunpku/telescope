@@ -186,6 +186,8 @@ void teles::LoadData()
     LoadR1();
     LoadL2();
     LoadR2();
+    PosiT0("l0");
+    PosiT0("r0");
     otree->Fill();
     Reset();
   }
@@ -395,6 +397,91 @@ void teles::Save()
   optFile->cd();
   otree->Write();
   optFile->Close();
+}
+
+void teles::PosiT0(TString tname)
+{
+  teT0 *t0 = NULL;
+  float dis1,dis2,refw,refb;
+  if(tname.EqualTo("l0")) 
+  {
+    t0 = l0;
+    dis1 = teL0W1dis;
+    dis2 = teL0B7dis;
+    refw = 8.1;//from alignment,default 8
+    refb = 18.1;//from alignment,default 16
+  }
+  if(tname.EqualTo("r0")) 
+  {
+    t0 = r0;
+    dis1 = teR0W1dis;
+    dis2 = teR0B7dis;
+    refw = 8.2;//from alignment,default 8
+    refb = 18.0;//from alignment,default 16
+  }
+  if(!t0) MiaoError("teles::PosiT0 : tname should be l0/r0");
+  if(t0->w1.hit<=0) return;
+  if(t0->bb7.hit<=0)
+  {
+    t0->hit = t0->w1.hit;
+    for(int i=0;i<t0->hit;i++)
+    {
+      t0->w1e[i] = t0->w1.e[i];
+      t0->w1x[i] = t0->w1.xs[i];
+      t0->w1y[i] = t0->w1.ys[i];
+    }
+  }
+  else
+  {
+    bool flag[teMaxHit];
+    for(int i=0;i<teMaxHit;i++) flag[i] = false;
+    for(int i=0;i<t0->w1.hit;i++)
+    {
+      int tmpj = -1;
+      int wi = t0->w1.xs[i];
+      int wj = t0->w1.ys[i];
+      float wxl = (wi-8)*teW1w*dis2/dis1;
+      float wxh = (wi-7)*teW1w*dis2/dis1;
+      float wyl = (wj-refw)*teW1w*dis2/dis1;
+      float wyh = (wj-refw+1)*teW1w*dis2/dis1;
+      
+      for(int j=0;j<t0->bb7.hit;j++)
+      {
+        if(flag[j]) continue;
+        int bi = t0->bb7.xs[j];
+        int bj = t0->bb7.ys[j];
+        float bxl = (bi-16-1)*teB7w;
+        float bxh = (bi-15+1)*teB7w;
+        float byl = (bj-refb-1)*teB7w;
+        float byh = (bj-refb+1+1)*teB7w;
+        
+        if(bxh<wxl||bxl>wxh||byh<wyl||byl>wyh) continue;
+        else
+        {
+          flag[j] = true;
+          tmpj = j;
+          break;
+        }
+      }
+      
+      t0->w1e[i] = t0->w1.e[i];
+      t0->w1x[i] = t0->w1.xs[i];
+      t0->w1y[i] = t0->w1.ys[i];
+      t0->hit++;
+      if(tmpj==-1)//hit on w1
+      {
+        t0->b7e[i] = 0;
+        t0->b7x[i] = -1;
+        t0->b7y[i] = -1;
+      }
+      else//hit on w1 and bb7
+      {
+        t0->b7e[i] = t0->bb7.e[tmpj];
+        t0->b7x[i] = t0->bb7.xs[tmpj];
+        t0->b7y[i] = t0->bb7.ys[tmpj];
+      }
+    }
+  }
 }
 
 void teles::SortDSSD(teDetector &dec, string det_name, int nums, float window)

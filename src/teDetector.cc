@@ -58,6 +58,15 @@ void teT0::Reset()
   Clear();
   w1.Reset();
   bb7.Reset();
+  memset(w1e,0,sizeof(w1e));
+  memset(b7e,0,sizeof(b7e));
+  for(int i=0;i<teMaxHit;i++)
+  {
+    w1x[i] = -1;
+    w1y[i] = -1;
+    b7x[i] = -1;
+    b7y[i] = -1;
+  }
 }
 //---------------------------------------------------
 teT1::teT1()
