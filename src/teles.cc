@@ -173,6 +173,7 @@ void teles::LoadData()
   long onePC = nentries/100;
   for(long ientry=0;ientry<nentries;ientry++)
   {
+    Reset();
     if(!(ientry%onePC))
     {
       printf("\r Progress Events %04d : %11ld : %6.1f %%",runNum,ientry,(float)ientry/(float)onePC);
@@ -189,7 +190,6 @@ void teles::LoadData()
     PosiT0("l0");
     PosiT0("r0");
     otree->Fill();
-    Reset();
   }
   printf("\n");
 }
@@ -201,6 +201,7 @@ void teles::LoadL0()
   {
     float tvx = npl0wf[i][0] + npl0wf[i][1] * mdc[0][i];
     float tvy = npl0wb[i][0] + npl0wb[i][1] * mdc[0][i+16];
+    
     if(tvx>0&&tvx<8000)
       l0->w1.xv[15-i] = tvx;
     if(tvy>0&&tvy<8000)

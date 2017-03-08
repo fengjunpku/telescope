@@ -14,6 +14,7 @@ void teDetector::Reset()
   memset(yv,0,sizeof(yv));
   memset(nv,0,sizeof(nv));
   memset(e,0,sizeof(e));
+  hit = 0;
   for(int i=0;i<teMaxHit;i++)
   {
     xs[i] = -1;
@@ -36,6 +37,9 @@ void teTele::Clear()
   sv = 0;
   se = 0;
   hit = 0;
+  for(int i=0;i<32;i++)
+    for(int j=0;j<20;j++)
+      tv[i][j] = -999;
   for(int i=0;i<teMaxHit;i++)
   {
     t[i] = -999;
