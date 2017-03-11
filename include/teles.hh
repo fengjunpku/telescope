@@ -31,6 +31,7 @@ private:
   void LoadR1();
   void LoadL2();
   void LoadR2();
+  void TimeInfo();
   void PosiT0(TString tname);
   void Reset();
   TFile *inputFile,*optFile;

@@ -187,6 +187,7 @@ void teles::LoadData()
     LoadR1();
     LoadL2();
     LoadR2();
+    TimeInfo();
     PosiT0("l0");
     PosiT0("r0");
     otree->Fill();
@@ -201,7 +202,6 @@ void teles::LoadL0()
   {
     float tvx = npl0wf[i][0] + npl0wf[i][1] * mdc[0][i];
     float tvy = npl0wb[i][0] + npl0wb[i][1] * mdc[0][i+16];
-    
     if(tvx>0&&tvx<8000)
       l0->w1.xv[15-i] = tvx;
     if(tvy>0&&tvy<8000)
@@ -381,6 +381,65 @@ void teles::LoadR2()
     r2->se = inter["r2ssd"] + slope["r2ssd"] * r2->sv;
   }
   SortDSSD(r2->bb7,"r2bb7",32);
+}
+
+void teles::TimeInfo()
+{
+  //time-t0
+  for(int i=0;i<16;i++)
+  {
+    l0->gmv[15-i] = gml[0][i+64];
+    r0->gmv[15-i] = gml[1][i+64];
+    for(int m=0;m<20;m++)
+    {
+      l0->tv[15-i][m] = gdc[0][i+64][m];
+      r0->tv[15-i][m] = gdc[1][i+64][m];
+    }
+  }
+ //time-l1
+  for(int i=0;i<16;i++)
+  {
+    if(i<8) l1->gmv[7-i] = gml[0][i];
+    else    l1->gmv[i]   = gml[0][i];
+    for(int m=0;m<20;m++)
+    {
+      if(i<8) l1->tv[7-i][m] = gdc[0][i][m];
+      else    l1->tv[i][m]   = gdc[0][i][m];
+    }
+  }
+  //time-r1
+  for(int i=0;i<16;i++)
+  {
+    if(i<8) r1->gmv[7-i] = gml[0][i+16];
+    else    r1->gmv[i]   = gml[0][i+16];
+    for(int m=0;m<20;m++)
+    {
+      if(i<8) r1->tv[7-i][m] = gdc[0][i+16][m];
+      else    r1->tv[i][m]   = gdc[0][i+16][m];
+    }
+  }
+  //time-l2
+  for(int i=0;i<32;i++)
+  {
+    if(i<16) l2->gmv[15-i] = gml[0][i+32];
+    else     l2->gmv[47-i] = gml[0][i+32];
+    for(int m=0;m<20;m++)
+    {
+      if(i<16) l2->tv[15-i][m] = gdc[0][i+32][m];
+      else     l2->tv[47-i][m] = gdc[0][i+32][m];
+    }
+  }
+  //time-r2
+  for(int i=0;i<32;i++)
+  {
+    if(i<16) r2->gmv[15-i] = gml[1][i+32];
+    else     r2->gmv[47-i] = gml[1][i+32];
+    for(int m=0;m<20;m++)
+    {
+      if(i<16) r2->tv[15-i][m] = gdc[1][i+32][m];
+      else     r2->tv[47-i][m] = gdc[1][i+32][m];
+    }
+  }
 }
 
 void teles::Reset()

@@ -33,8 +33,9 @@ public:
   float se;//energy of ssd after cali
   short hit;
   int tv[32][20];//original value of gdc, gmulti less than 20
+  short gmv[32];//original value of gmulti
   float t[teMaxHit];//value of gdc
-  short tm[teMaxHit];//multi of gdc
+  short gm[teMaxHit];//multi of gdc
 
   ClassDef(teTele,1);
 };
