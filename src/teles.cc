@@ -170,13 +170,14 @@ void teles::LoadData()
   cout<<"   ======= Loading Data "<<runNum<<" ======="<<endl;
   if(!dtree) MiaoError("data::loop the tree is null");
   long nentries = dtree->GetEntriesFast();
-  long onePC = nentries/100;
+  long onePC = nentries/1000;
+  onePC = onePC>1?onePC:1;
   for(long ientry=0;ientry<nentries;ientry++)
   {
     Reset();
     if(!(ientry%onePC))
     {
-      printf("\r Progress Events %04d : %11ld : %6.1f %%",runNum,ientry,(float)ientry/(float)onePC);
+      printf("\r Progress Events %04d : %11ld : %6.1f %%",runNum,ientry,0.1*(float)ientry/(float)onePC);
       //cout<<ientry<<"    "<<(double)ientry/(double)nentries*100.<<" %"<<endl;
       fflush(stdout);
     }
@@ -385,6 +386,8 @@ void teles::LoadR2()
 
 void teles::TimeInfo()
 {
+  float ref0 = gdc[0][127][0];
+  float ref1 = gdc[0][127][1];
   //time-t0
   for(int i=0;i<16;i++)
   {
@@ -392,8 +395,8 @@ void teles::TimeInfo()
     r0->gmv[15-i] = gml[1][i+64];
     for(int m=0;m<20;m++)
     {
-      l0->tv[15-i][m] = gdc[0][i+64][m];
-      r0->tv[15-i][m] = gdc[1][i+64][m];
+      l0->tv[15-i][m] = gdc[0][i+64][m] - ref0;
+      r0->tv[15-i][m] = gdc[1][i+64][m] - ref1;
     }
   }
  //time-l1
@@ -403,8 +406,8 @@ void teles::TimeInfo()
     else    l1->gmv[i]   = gml[0][i];
     for(int m=0;m<20;m++)
     {
-      if(i<8) l1->tv[7-i][m] = gdc[0][i][m];
-      else    l1->tv[i][m]   = gdc[0][i][m];
+      if(i<8) l1->tv[7-i][m] = gdc[0][i][m] - ref0;
+      else    l1->tv[i][m]   = gdc[0][i][m] - ref0;
     }
   }
   //time-r1
@@ -414,8 +417,8 @@ void teles::TimeInfo()
     else    r1->gmv[i]   = gml[0][i+16];
     for(int m=0;m<20;m++)
     {
-      if(i<8) r1->tv[7-i][m] = gdc[0][i+16][m];
-      else    r1->tv[i][m]   = gdc[0][i+16][m];
+      if(i<8) r1->tv[7-i][m] = gdc[0][i+16][m] - ref0;
+      else    r1->tv[i][m]   = gdc[0][i+16][m] - ref0;
     }
   }
   //time-l2
@@ -425,8 +428,8 @@ void teles::TimeInfo()
     else     l2->gmv[47-i] = gml[0][i+32];
     for(int m=0;m<20;m++)
     {
-      if(i<16) l2->tv[15-i][m] = gdc[0][i+32][m];
-      else     l2->tv[47-i][m] = gdc[0][i+32][m];
+      if(i<16) l2->tv[15-i][m] = gdc[0][i+32][m] - ref0;
+      else     l2->tv[47-i][m] = gdc[0][i+32][m] - ref0;
     }
   }
   //time-r2
@@ -436,8 +439,55 @@ void teles::TimeInfo()
     else     r2->gmv[47-i] = gml[1][i+32];
     for(int m=0;m<20;m++)
     {
-      if(i<16) r2->tv[15-i][m] = gdc[1][i+32][m];
-      else     r2->tv[47-i][m] = gdc[1][i+32][m];
+      if(i<16) r2->tv[15-i][m] = gdc[1][i+32][m] - ref1;
+      else     r2->tv[47-i][m] = gdc[1][i+32][m] - ref1;
+    }
+  }
+  //only 4 in one dssd
+  for(int i=0;i<teMaxHit;i++)
+  {
+    short ts = -1;
+    //l0
+    ts = l0->w1.xs[i];
+    if(ts>-1)
+    {
+      l0->t[i] =  l0->tv[ts][0];
+      l0->gm[i] = l0->gmv[ts];
+    }
+    //r0
+    ts = r0->w1.xs[i];
+    if(ts>-1)
+    {
+      r0->t[i] =  r0->tv[ts][0];
+      r0->gm[i] = r0->gmv[ts];
+    }
+    //l1
+    ts = l1->w1.xs[i];
+    if(ts>-1)
+    {
+      l1->t[i] =  l1->tv[ts][0];
+      l1->gm[i] = l1->gmv[ts];
+    }
+    //r0
+    ts = r1->w1.xs[i];
+    if(ts>-1)
+    {
+      r1->t[i] =  r1->tv[ts][0];
+      r1->gm[i] = r1->gmv[ts];
+    }
+    //l2
+    ts = l2->bb7.ys[i];
+    if(ts>-1)
+    {
+      l2->t[i] =  l2->tv[ts][0];
+      l2->gm[i] = l2->gmv[ts];
+    }
+    //r2
+    ts = r2->bb7.ys[i];
+    if(ts>-1)
+    {
+      r2->t[i] =  r2->tv[ts][0];
+      r2->gm[i] = r2->gmv[ts];
     }
   }
 }

@@ -159,7 +159,7 @@ void caliNT::Record()
     g_fit->GetPoint(i,x,y);
     of<<setw(15)<<x;
   }
-	of<<endl;
+  of<<endl;
   of.close();
 }
 
