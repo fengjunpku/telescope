@@ -391,8 +391,8 @@ void teles::TimeInfo()
   //time-t0
   for(int i=0;i<16;i++)
   {
-    l0->gmv[15-i] = gml[0][i+64];
-    r0->gmv[15-i] = gml[1][i+64];
+    l0->mv[15-i] = gml[0][i+64];
+    r0->mv[15-i] = gml[1][i+64];
     for(int m=0;m<20;m++)
     {
       l0->tv[15-i][m] = gdc[0][i+64][m] - ref0;
@@ -402,8 +402,8 @@ void teles::TimeInfo()
  //time-l1
   for(int i=0;i<16;i++)
   {
-    if(i<8) l1->gmv[7-i] = gml[0][i];
-    else    l1->gmv[i]   = gml[0][i];
+    if(i<8) l1->mv[7-i] = gml[0][i];
+    else    l1->mv[i]   = gml[0][i];
     for(int m=0;m<20;m++)
     {
       if(i<8) l1->tv[7-i][m] = gdc[0][i][m] - ref0;
@@ -413,8 +413,8 @@ void teles::TimeInfo()
   //time-r1
   for(int i=0;i<16;i++)
   {
-    if(i<8) r1->gmv[7-i] = gml[0][i+16];
-    else    r1->gmv[i]   = gml[0][i+16];
+    if(i<8) r1->mv[7-i] = gml[0][i+16];
+    else    r1->mv[i]   = gml[0][i+16];
     for(int m=0;m<20;m++)
     {
       if(i<8) r1->tv[7-i][m] = gdc[0][i+16][m] - ref0;
@@ -424,8 +424,8 @@ void teles::TimeInfo()
   //time-l2
   for(int i=0;i<32;i++)
   {
-    if(i<16) l2->gmv[15-i] = gml[0][i+32];
-    else     l2->gmv[47-i] = gml[0][i+32];
+    if(i<16) l2->mv[15-i] = gml[0][i+32];
+    else     l2->mv[47-i] = gml[0][i+32];
     for(int m=0;m<20;m++)
     {
       if(i<16) l2->tv[15-i][m] = gdc[0][i+32][m] - ref0;
@@ -435,8 +435,8 @@ void teles::TimeInfo()
   //time-r2
   for(int i=0;i<32;i++)
   {
-    if(i<16) r2->gmv[15-i] = gml[1][i+32];
-    else     r2->gmv[47-i] = gml[1][i+32];
+    if(i<16) r2->mv[15-i] = gml[1][i+32];
+    else     r2->mv[47-i] = gml[1][i+32];
     for(int m=0;m<20;m++)
     {
       if(i<16) r2->tv[15-i][m] = gdc[1][i+32][m] - ref1;
@@ -451,43 +451,43 @@ void teles::TimeInfo()
     ts = l0->w1.xs[i];
     if(ts>-1)
     {
-      l0->t[i] =  l0->tv[ts][0];
-      l0->gm[i] = l0->gmv[ts];
+      l0->t[i] = l0->tv[ts][0];
+      l0->m[i] = l0->mv[ts];
     }
     //r0
     ts = r0->w1.xs[i];
     if(ts>-1)
     {
-      r0->t[i] =  r0->tv[ts][0];
-      r0->gm[i] = r0->gmv[ts];
+      r0->t[i] = r0->tv[ts][0];
+      r0->m[i] = r0->mv[ts];
     }
     //l1
     ts = l1->w1.xs[i];
     if(ts>-1)
     {
-      l1->t[i] =  l1->tv[ts][0];
-      l1->gm[i] = l1->gmv[ts];
+      l1->t[i] = l1->tv[ts][0];
+      l1->m[i] = l1->mv[ts];
     }
     //r0
     ts = r1->w1.xs[i];
     if(ts>-1)
     {
-      r1->t[i] =  r1->tv[ts][0];
-      r1->gm[i] = r1->gmv[ts];
+      r1->t[i] = r1->tv[ts][0];
+      r1->m[i] = r1->mv[ts];
     }
     //l2
     ts = l2->bb7.ys[i];
     if(ts>-1)
     {
-      l2->t[i] =  l2->tv[ts][0];
-      l2->gm[i] = l2->gmv[ts];
+      l2->t[i] = l2->tv[ts][0];
+      l2->m[i] = l2->mv[ts];
     }
     //r2
     ts = r2->bb7.ys[i];
     if(ts>-1)
     {
-      r2->t[i] =  r2->tv[ts][0];
-      r2->gm[i] = r2->gmv[ts];
+      r2->t[i] = r2->tv[ts][0];
+      r2->m[i] = r2->mv[ts];
     }
   }
 }

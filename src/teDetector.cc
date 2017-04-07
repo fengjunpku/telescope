@@ -39,14 +39,14 @@ void teTele::Clear()
   hit = 0;
   for(int i=0;i<32;i++)
   {
-    gmv[i] = 0;
+    mv[i] = 0;
     for(int j=0;j<20;j++)
       tv[i][j] = -99999;
   }
   for(int i=0;i<teMaxHit;i++)
   {
     t[i] = -99999;
-    gm[i] = 0;
+    m[i] = 0;
   }
 }
 
