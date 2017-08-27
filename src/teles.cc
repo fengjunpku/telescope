@@ -387,7 +387,7 @@ void teles::LoadR2()
 void teles::TimeInfo()
 {
   float ref0 = gdc[0][127][0];
-  float ref1 = gdc[0][127][1];
+  float ref1 = gdc[1][127][0];
   //time-t0
   for(int i=0;i<16;i++)
   {
