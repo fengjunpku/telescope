@@ -114,6 +114,32 @@ void teles::Branch()
   otree->Branch("r1","teT1",&r1);
   otree->Branch("l2","teT2",&l2);
   otree->Branch("r2","teT2",&r2);
+  
+  otree->Branch("l0m",&l0m,"l0m/I");
+  otree->Branch("r0m",&r0m,"r0m/I");
+  otree->Branch("l2s",&l2s,"l2s/I");
+  otree->Branch("r2s",&r2s,"r2s/I");
+  otree->Branch("fms",&fms,"fms/I");
+  otree->Branch("fmss",&fmss,"fmss/I");
+  otree->Branch("l0s",&l0s,"l0s/I");
+  otree->Branch("l1s",&l1s,"l1s/I");
+  otree->Branch("r0s",&r0s,"r0s/I");
+  otree->Branch("r1s",&r1s,"r1s/I");
+  otree->Branch("ssd",&ssd,"ssd/I");
+  otree->Branch("fmm",&fmm,"fmm/I");
+  
+  otree->Branch("l0mt",&l0mt,"l0mt/D");
+  otree->Branch("r0mt",&r0mt,"r0mt/D");
+  otree->Branch("l2st",&l2st,"l2st/D");
+  otree->Branch("r2st",&r2st,"r2st/D");
+  otree->Branch("fmst",&fmst,"fmst/D");
+  otree->Branch("fmsst",&fmsst,"fmsst/D");
+  otree->Branch("l0st",&l0st,"l0st/D");
+  otree->Branch("l1st",&l1st,"l1st/D");
+  otree->Branch("r0st",&r0st,"r0st/D");
+  otree->Branch("r1st",&r1st,"r1st/D");
+  otree->Branch("ssdt",&ssdt,"ssdt/D");
+  otree->Branch("fmmt",&fmmt,"fmmt/D");
 }
 
 void teles::ReadPars(float par[][2],const char* filename,int parNum)
@@ -443,6 +469,19 @@ void teles::TimeInfo()
       else     r2->tv[47-i][m] = gdc[1][i+32][m] - ref1;
     }
   }
+  //trigger
+  l0m  = gml[0][113]; l0mt  = gdc[0][113][0] - ref0;
+  r0m  = gml[0][114]; r0mt  = gdc[0][114][0] - ref0;
+  l2s  = gml[0][115]; l2st  = gdc[0][115][0] - ref0; 
+  r2s  = gml[0][116]; r2st  = gdc[0][116][0] - ref0;
+  fms  = gml[0][117]; fmst  = gdc[0][117][0] - ref0;
+  fmss = gml[0][118]; fmsst = gdc[0][118][0] - ref0;
+  l0s  = gml[0][119]; l0st  = gdc[0][119][0] - ref0;
+  l1s  = gml[0][120]; l1st  = gdc[0][120][0] - ref0;
+  r0s  = gml[0][121]; r0st  = gdc[0][121][0] - ref0;
+  r1s  = gml[0][122]; r1st  = gdc[0][122][0] - ref0;
+  ssd  = gml[0][123]; ssdt  = gdc[0][123][0] - ref0;
+  fmm  = gml[0][124]; fmmt  = gdc[0][124][0] - ref0;
   //only 4 in one dssd
   for(int i=0;i<teMaxHit;i++)
   {
@@ -500,6 +539,18 @@ void teles::Reset()
   r1->Reset();
   l2->Reset();
   r2->Reset();
+  l0m  = 0; l0mt =  -99999;
+  r0m  = 0; r0mt =  -99999;
+  l2s  = 0; l2st =  -99999;
+  r2s  = 0; r2st =  -99999;
+  fms  = 0; fmst =  -99999;
+  fmss = 0; fmsst = -99999;
+  l0s  = 0; l0st =  -99999;
+  l1s  = 0; l1st =  -99999;
+  r0s  = 0; r0st =  -99999;
+  r1s  = 0; r1st =  -99999;
+  ssd  = 0; ssdt =  -99999;
+  fmm  = 0; fmmt =  -99999;
 }
 
 void teles::Save()
