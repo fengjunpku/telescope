@@ -41,11 +41,11 @@ void teTele::Clear()
   {
     mv[i] = 0;
     for(int j=0;j<20;j++)
-      tv[i][j] = -99999;
+      tv[i][j] = teNan;
   }
   for(int i=0;i<teMaxHit;i++)
   {
-    t[i] = -99999;
+    t[i] = teNan;
     m[i] = 0;
   }
 }

@@ -8,7 +8,8 @@
 namespace teleDef
 {
   static const int teMaxHit = 4;
-  static const Double_t deg = TMath::DegToRad();
+  static const Double_t teDeg = TMath::DegToRad();
+  static const Double_t teNan = TMath::QuietNaN();
   //static const TString tePath = "/Volumes/JunData/data/rootfile/";
   static const TString tePath = "/data/d2/CIAE_2016_BCO_data/datafile/";
   //static const TString teOptP = "./";

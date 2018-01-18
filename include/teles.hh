@@ -40,8 +40,8 @@ private:
   teT1 *l1,*r1;
   teT2 *l2,*r2;
   //trigger
-  int l0m,r0m,l2s,r2s,fms,fmss,l0s,l1s,r0s,r1s,ssd,fmm;//only record multi & first time info
-  double l0mt,r0mt,l2st,r2st,fmst,fmsst,l0st,l1st,r0st,r1st,ssdt,fmmt;
+  int l0m,r0m,l2s,r2s,fms,fsm,l0s,l1s,r0s,r1s,ssd,fmm;//only record multi & first time info
+  double l0mt,r0mt,l2st,r2st,fmst,fsmt,l0st,l1st,r0st,r1st,ssdt,fmmt;
   int runNum;
   int adc[teADCNum][32];
   int mdc[teMDCNum][32];

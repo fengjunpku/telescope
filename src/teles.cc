@@ -120,7 +120,7 @@ void teles::Branch()
   otree->Branch("l2s",&l2s,"l2s/I");
   otree->Branch("r2s",&r2s,"r2s/I");
   otree->Branch("fms",&fms,"fms/I");
-  otree->Branch("fmss",&fmss,"fmss/I");
+  otree->Branch("fsm",&fsm,"fsm/I");
   otree->Branch("l0s",&l0s,"l0s/I");
   otree->Branch("l1s",&l1s,"l1s/I");
   otree->Branch("r0s",&r0s,"r0s/I");
@@ -133,7 +133,7 @@ void teles::Branch()
   otree->Branch("l2st",&l2st,"l2st/D");
   otree->Branch("r2st",&r2st,"r2st/D");
   otree->Branch("fmst",&fmst,"fmst/D");
-  otree->Branch("fmsst",&fmsst,"fmsst/D");
+  otree->Branch("fsmt",&fsmt,"fsmt/D");
   otree->Branch("l0st",&l0st,"l0st/D");
   otree->Branch("l1st",&l1st,"l1st/D");
   otree->Branch("r0st",&r0st,"r0st/D");
@@ -252,10 +252,11 @@ void teles::LoadL0()
 
   }
   //l0ssd
-  if(adc[4][17]>0&&adc[4][17]<4000)
+  if(adc[4][17]>90&&adc[4][17]<4000)
   {
     l0->sv = adc[4][17];
     l0->se = inter["l0ssd"] + slope["l0ssd"] * l0->sv;
+    l0->hit = 1;
   }
   SortDSSD(l0->w1,"l0w1");
   SortDSSD(l0->bb7,"l0bb7",32);
@@ -291,10 +292,11 @@ void teles::LoadR0()
 
   }
   //r0ssd
-  if(adc[4][18]>0&&adc[4][18]<4000)
+  if(adc[4][18]>90&&adc[4][18]<4000)
   {
     r0->sv = adc[4][18];
     r0->se = inter["r0ssd"] + slope["r0ssd"] * r0->sv;
+    r0->hit = 1;
   }
   SortDSSD(r0->w1,"r0w1");
   SortDSSD(r0->bb7,"r0bb7",32);
@@ -319,10 +321,11 @@ void teles::LoadL1()
     }
   }
   //l1ssd
-  if(adc[4][16]>0&&adc[4][16]<4000)
+  if(adc[4][16]>90&&adc[4][16]<4000)
   {
     l1->sv = adc[4][16];
     l1->se = inter["l1ssd"] + slope["l1ssd"] * l1->sv;
+    l1->hit = 1;
   }
   SortDSSD(l1->w1,"l1w1");
 }
@@ -346,10 +349,11 @@ void teles::LoadR1()
     }
   }
   //r1ssd
-  if(adc[4][19]>0&&adc[4][19]<4000)
+  if(adc[4][19]>90&&adc[4][19]<4000)
   {
     r1->sv = adc[4][19];
     r1->se = inter["r1ssd"] + slope["r1ssd"] * r1->sv;
+    r1->hit = 1;
   }
   SortDSSD(r1->w1,"r1w1");
 }
@@ -374,10 +378,11 @@ void teles::LoadL2()
 
   }
   //l2ssd
-  if(adc[4][21]>0&&adc[4][21]<4000)
+  if(adc[4][21]>90&&adc[4][21]<4000)
   {
     l2->sv = adc[4][21];
     l2->se = inter["l2ssd"] + slope["l2ssd"] * l2->sv;
+    l2->hit = 1;
   }
   SortDSSD(l2->bb7,"l2bb7",32);
 }
@@ -402,10 +407,11 @@ void teles::LoadR2()
 
   }
   //r2ssd
-  if(adc[4][20]>0&&adc[4][20]<4000)
+  if(adc[4][20]>90&&adc[4][20]<4000)
   {
     r2->sv = adc[4][20];
     r2->se = inter["r2ssd"] + slope["r2ssd"] * r2->sv;
+    r2->hit = 1;
   }
   SortDSSD(r2->bb7,"r2bb7",32);
 }
@@ -470,18 +476,18 @@ void teles::TimeInfo()
     }
   }
   //trigger
-  l0m  = gml[0][113]; l0mt  = gdc[0][113][0] - ref0;
-  r0m  = gml[0][114]; r0mt  = gdc[0][114][0] - ref0;
-  l2s  = gml[0][115]; l2st  = gdc[0][115][0] - ref0; 
-  r2s  = gml[0][116]; r2st  = gdc[0][116][0] - ref0;
-  fms  = gml[0][117]; fmst  = gdc[0][117][0] - ref0;
-  fmss = gml[0][118]; fmsst = gdc[0][118][0] - ref0;
-  l0s  = gml[0][119]; l0st  = gdc[0][119][0] - ref0;
-  l1s  = gml[0][120]; l1st  = gdc[0][120][0] - ref0;
-  r0s  = gml[0][121]; r0st  = gdc[0][121][0] - ref0;
-  r1s  = gml[0][122]; r1st  = gdc[0][122][0] - ref0;
-  ssd  = gml[0][123]; ssdt  = gdc[0][123][0] - ref0;
-  fmm  = gml[0][124]; fmmt  = gdc[0][124][0] - ref0;
+  l0m = gml[0][113]; l0mt = gdc[0][113][0] - ref0;
+  r0m = gml[0][114]; r0mt = gdc[0][114][0] - ref0;
+  l2s = gml[0][115]; l2st = gdc[0][115][0] - ref0; 
+  r2s = gml[0][116]; r2st = gdc[0][116][0] - ref0;
+  fms = gml[0][117]; fmst = gdc[0][117][0] - ref0;
+  fsm = gml[0][118]; fsmt = gdc[0][118][0] - ref0;
+  l0s = gml[0][119]; l0st = gdc[0][119][0] - ref0;
+  l1s = gml[0][120]; l1st = gdc[0][120][0] - ref0;
+  r0s = gml[0][121]; r0st = gdc[0][121][0] - ref0;
+  r1s = gml[0][122]; r1st = gdc[0][122][0] - ref0;
+  ssd = gml[0][123]; ssdt = gdc[0][123][0] - ref0;
+  fmm = gml[0][124]; fmmt = gdc[0][124][0] - ref0;
   //only 4 in one dssd
   for(int i=0;i<teMaxHit;i++)
   {
@@ -539,18 +545,18 @@ void teles::Reset()
   r1->Reset();
   l2->Reset();
   r2->Reset();
-  l0m  = 0; l0mt =  -99999;
-  r0m  = 0; r0mt =  -99999;
-  l2s  = 0; l2st =  -99999;
-  r2s  = 0; r2st =  -99999;
-  fms  = 0; fmst =  -99999;
-  fmss = 0; fmsst = -99999;
-  l0s  = 0; l0st =  -99999;
-  l1s  = 0; l1st =  -99999;
-  r0s  = 0; r0st =  -99999;
-  r1s  = 0; r1st =  -99999;
-  ssd  = 0; ssdt =  -99999;
-  fmm  = 0; fmmt =  -99999;
+  l0m = 0; l0mt = teNan;
+  r0m = 0; r0mt = teNan;
+  l2s = 0; l2st = teNan;
+  r2s = 0; r2st = teNan;
+  fms = 0; fmst = teNan;
+  fsm = 0; fsmt = teNan;
+  l0s = 0; l0st = teNan;
+  l1s = 0; l1st = teNan;
+  r0s = 0; r0st = teNan;
+  r1s = 0; r1st = teNan;
+  ssd = 0; ssdt = teNan;
+  fmm = 0; fmmt = teNan;
 }
 
 void teles::Save()
